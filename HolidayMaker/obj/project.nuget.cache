@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "EPK4edF/ang=",
+  "dgSpecHash": "VcBA1jZBvjI=",
   "success": true,
   "projectFilePath": "/Users/edrin/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/edrin/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+    "/Users/edrin/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.2/microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
+    "/Users/edrin/.nuget/packages/npgsql/9.0.1/npgsql.9.0.1.nupkg.sha512"
+  ],
   "logs": []
 }
