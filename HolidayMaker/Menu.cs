@@ -16,7 +16,7 @@ public class Menu
     // skriver ut menyn i konsolen
     Console.WriteLine("===================");
     Console.WriteLine("User related options:");
-    Console.WriteLine("1. List all users"); // klar
+    Console.WriteLine("1. List all users"); // klar (lägg till mer info)
     Console.WriteLine("2. Register new user"); // klar (edrin - try catch error för att ha varje parameter med?)
 
     Console.WriteLine("\n===================");
