@@ -15,13 +15,27 @@ public class Menu
   {
     // skriver ut menyn i konsolen
     Console.WriteLine("===================");
-    Console.WriteLine("Choose option");
+    Console.WriteLine("User related options");
     Console.WriteLine("1. List all users");
-    Console.WriteLine("2. Show one");
-    Console.WriteLine("3. Add one");
-    Console.WriteLine("4. Update one");
-    Console.WriteLine("5. Delete one");
-    Console.WriteLine("9. Quit");
+    Console.WriteLine("2. Register new user");
+
+    Console.WriteLine("===================");
+    Console.WriteLine("Bookings");
+    Console.WriteLine("3. Create new booking");
+    Console.WriteLine("4. Change details in a booking");
+    Console.WriteLine("5. Show every person in a booking");
+    Console.WriteLine("6. Cancel a booking");
+
+    Console.WriteLine("===================");
+    Console.WriteLine("Specified searches");
+    Console.WriteLine("7. Search accommodations based on distance to beach");
+    Console.WriteLine("8. Search accommodations based on distance to center");
+    Console.WriteLine("9. Rooms sorted by price (low to high)");
+    Console.WriteLine("10. Rooms sorted by rating (high to low)");
+    Console.WriteLine("11. Search for available rooms between specified dates");
+
+    Console.WriteLine("===================");
+    Console.WriteLine("12. Quit");
     Console.WriteLine("===================");
     // lyssnar på användaren
     AskUser();
