@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HolidayMaker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9cbdf0c79724292ecbc16b46b39914735eaa311b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eea04f6e0948efd7934775f35bb587259bdd3059")]
 [assembly: System.Reflection.AssemblyProductAttribute("HolidayMaker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HolidayMaker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
