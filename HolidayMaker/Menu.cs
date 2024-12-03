@@ -48,7 +48,7 @@ public class Menu
     var response = Console.ReadLine();
     if (response is not null)
     {
-      string? id; // define for multiple use below
+      string id; // define for multiple use below
 
       // kör olika actions beroende på vad användaren skrivit
       switch (response)
