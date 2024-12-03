@@ -90,7 +90,7 @@ public class Menu
 
         case ("3"): // "3. Create new booking"
           Console.WriteLine("Enter id to show details about one");
-          id = Console.ReadLine();
+            id = Console.ReadLine();
           if (id is not null)
           {
             _actions.ShowOne(id);
@@ -111,15 +111,53 @@ public class Menu
 
 
         case ("5"): // 5. Show every person in a booking
-          Console.WriteLine("Enter id to delete one");
-          id = Console.ReadLine();
-          if (id is not null)
+          Console.WriteLine("Enter booking ID to show details:");
+          string id = Console.ReadLine(); 
+
+          if (!string.IsNullOrEmpty(id))
           {
-            _actions.DeleteOne(id);
+            // SQL-queryn
+            string query = @"
+            SELECT 
+                users.firstname AS booker, 
+                g.firstname AS guests, 
+                b.id AS booking_id
+            FROM users
+            JOIN public.bookings b ON users.id = b.user_id
+            JOIN public.guests g ON b.id = g.booking_id
+            WHERE b.id = @BookingId
+            GROUP BY users.firstname, g.firstname, b.id;";
+
+            
+            
+            // Databasanslutning CASE 5
+            string connectionString = "Host=localhost;Port=5433;Database=postgres;Username=postgres;Password=postgres;";
+            
+            using (var connection = new Npgsql.NpgsqlConnection(connectionString))
+            {
+              connection.Open();
+              using (var command = new Npgsql.NpgsqlCommand(query, connection))
+              {
+                // Lägg till parameter för Booking ID
+                command.Parameters.AddWithValue("@BookingId", int.Parse(id));
+
+                // Kör query och läs resultat
+                using (var reader = command.ExecuteReader())
+                {
+                  Console.WriteLine("Booker | Guest | Booking ID");
+                  while (reader.Read())
+                  {
+                    Console.WriteLine($"{reader["booker"]} | {reader["guests"]} | {reader["booking_id"]}");
+                  }
+                }
+              }
+            }
+          }
+          else
+          {
+            Console.WriteLine("Invalid input. Please enter a valid booking ID.");
           }
           break;
-
-
 
         case ("6"): // 6. Cancel a booking
           Console.WriteLine("Enter id to delete one");

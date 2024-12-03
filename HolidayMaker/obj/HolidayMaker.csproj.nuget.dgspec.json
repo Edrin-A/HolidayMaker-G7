@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "/Users/edrin/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj": {}
+    "/Users/farzaddehzad/HolidayMaker/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj": {}
   },
   "projects": {
-    "/Users/edrin/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj": {
+    "/Users/farzaddehzad/HolidayMaker/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/edrin/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj",
+        "projectUniqueName": "/Users/farzaddehzad/HolidayMaker/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj",
         "projectName": "HolidayMaker",
-        "projectPath": "/Users/edrin/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj",
-        "packagesPath": "/Users/edrin/.nuget/packages/",
-        "outputPath": "/Users/edrin/HolidayMaker-G7/HolidayMaker/obj/",
+        "projectPath": "/Users/farzaddehzad/HolidayMaker/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj",
+        "packagesPath": "/Users/farzaddehzad/.nuget/packages/",
+        "outputPath": "/Users/farzaddehzad/HolidayMaker/HolidayMaker-G7/HolidayMaker/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/edrin/.nuget/NuGet/NuGet.Config"
+          "/Users/farzaddehzad/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
