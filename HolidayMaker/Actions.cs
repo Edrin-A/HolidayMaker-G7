@@ -83,4 +83,15 @@ public class Actions
     }
   }
 
+  public async void GetRoomsSortedByPrice()
+  {
+    await using (var cmd = _db.CreateCommand("SELECT h.hotel_name, rt.type, r.price_per_night FROM rooms AS r LEFT JOIN hotels h ON r.hotel_id = h.id LEFT JOIN room_types rt ON r.room_type = rt.id ORDER BY r.price_per_night"))
+    await using (var reader = await cmd.ExecuteReaderAsync())
+    {
+      while (await reader.ReadAsync())
+      {
+        Console.WriteLine($"Hotel: {reader.GetString(0)} \t Room Type: {reader.GetString(1)} \t Price: {reader.GetFloat(2)}");
+      }
+    }
+  }
 }
