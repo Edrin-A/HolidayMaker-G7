@@ -94,4 +94,15 @@ public class Actions
       }
     }
   }
+  public async void GetHotelsSortedByRating()
+  {
+    await using (var cmd = _db.CreateCommand("SELECT h.hotel_name, h.rating FROM hotels h ORDER BY h.rating"))
+    await using (var reader = await cmd.ExecuteReaderAsync())
+    {
+      while (await reader.ReadAsync())
+      {
+        Console.WriteLine($"Hotel: {reader.GetString(0)} \t Rating: {reader.GetFloat(1)}");
+      }
+    }
+  }
 }

@@ -155,21 +155,13 @@ public class Menu
 
 
         case ("9"): // 9. Rooms sorted by price (low to high)
-          
-          
-            _actions.GetRoomsSortedByPrice();
-          
+          _actions.GetRoomsSortedByPrice();
           break;
 
 
 
-        case ("10"): // 10. Rooms sorted by rating (high to low)
-          Console.WriteLine("Enter id to delete one");
-          id = Console.ReadLine();
-          if (id is not null)
-          {
-            _actions.DeleteOne(id);
-          }
+        case ("10"): // 10. Hotels sorted by rating (high to low)
+          _actions.GetHotelsSortedByRating();
           break;
 
 
