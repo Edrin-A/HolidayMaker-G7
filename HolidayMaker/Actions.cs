@@ -77,10 +77,10 @@ public class Actions
     }
   }
 
-  public async void GetAllPersonsInBooking(int booking_id) // 5. SHow all persons in a booking
+  public async void GetAllPersonsInBooking(int booking_id) // 5. SHow all persons in a booking "klar"
   {
     // Prepare and execute the query from the view with parameters
-    await using (var cmd = _db.CreateCommand("SELECT * FROM view_persons_booking WHERE booking_id <= @booking_id"))
+    await using (var cmd = _db.CreateCommand("SELECT * FROM view_persons_booking WHERE booking_id = @booking_id"))
     {
       // Add the parameters (max distance and room type)
       cmd.Parameters.AddWithValue("@booking_id", booking_id);
@@ -117,14 +117,15 @@ public class Actions
 
 
 
-  public async void DeleteOne(string id)  // 6. Cancel a booking
+  public async void DeleteOne(string id)  // 6. Cancel a booking "klar"
+
   {
     // Delete data
     await using (var cmd = _db.CreateCommand("DELETE FROM bookings WHERE id = @id"))
     {
       cmd.Parameters.AddWithValue("@id", int.Parse(id));
       await cmd.ExecuteNonQueryAsync();
-      await using (var reader = await cmd.ExecuteReaderAsync()) ;
+      await using (var reader = await cmd.ExecuteReaderAsync()) ; 
     }
   }
 
