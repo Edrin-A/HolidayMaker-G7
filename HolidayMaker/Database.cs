@@ -7,10 +7,10 @@ public class Database
 
   // databasuppgifter
   private readonly string _host = "localhost";
-  private readonly string _port = "5432";
+  private readonly string _port = "5433";
   private readonly string _username = "postgres";
-  private readonly string _password = "Palestro!2024!";
-  private readonly string _database = "holidaysmaker";
+  private readonly string _password = "postgres";
+  private readonly string _database = "postgres";
 
   private NpgsqlDataSource _connection;
 
