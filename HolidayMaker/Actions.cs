@@ -144,13 +144,38 @@ public class Actions
   }
 
 
+  public async void GetRoomsSortedByPrice() // "9. Rooms sorted by price (low to high)"); // nami
+  {
+    await using (var cmd = _db.CreateCommand("SELECT h.hotel_name, rt.type, r.price_per_night FROM rooms AS r LEFT JOIN hotels h ON r.hotel_id = h.id LEFT JOIN room_types rt ON r.room_type = rt.id ORDER BY r.price_per_night"))
+    await using (var reader = await cmd.ExecuteReaderAsync())
+    {
+      while (await reader.ReadAsync())
+      {
+        Console.WriteLine($"Hotel: {reader.GetString(0)} \t Room Type: {reader.GetString(1)} \t Price: {reader.GetFloat(2)}");
+      }
+    }
+  }
+  public async void GetHotelsSortedByRating() // "10. Rooms sorted by rating (high to low)"); // nami
+  {
+    await using (var cmd = _db.CreateCommand("SELECT h.hotel_name, h.rating FROM hotels h ORDER BY h.rating DESC"))
+    await using (var reader = await cmd.ExecuteReaderAsync())
+    {
+      while (await reader.ReadAsync())
+      {
+        Console.WriteLine($"Hotel: {reader.GetString(0)} \t Rating: {reader.GetFloat(1)}");
+      }
+    }
+  }
+
+
+
 
   public async void SearchRoomsByPriceAndCity(string cityName, decimal minPrice, decimal maxPrice, string roomType) // 12. Search for all rooms in one city sorted by specific criteria
 {
   // Sanitize inputs to prevent invalid encoding issues
-    cityName = cityName?.Replace("\0", "").Trim();  // Remove null bytes and trim extra spaces
-    roomType = roomType?.Replace("\0", "").Trim(); // Remove null bytes and trim extra spaces
-    
+    // cityName = cityName?.Replace("\0", "").Trim();  // Remove null bytes and trim extra spaces
+    // roomType = roomType?.Replace("\0", "").Trim(); // Remove null bytes and trim extra spaces
+
     await using (var cmd = _db.CreateCommand("SELECT * FROM PriceByCityAndPrice WHERE city_name = @city AND price_per_night >= @minPrice AND price_per_night <= @maxPrice AND room_type = @roomType"))
     {
       cmd.Parameters.AddWithValue("@city", cityName);
@@ -173,10 +198,10 @@ public class Actions
       }
     }
 }
-
-
-
-  
-
-  
 }
+
+
+
+  
+
+  
