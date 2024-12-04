@@ -132,48 +132,57 @@ public class Menu
 
 
 
-        case ("7"): // 7. Search accommodations based on distance to beach ((hur långt borta får boendet max ligga ifrån en strand) GÖR EN QUERIE FÖR DETTA. Dynamisk sökning? )
-          Console.WriteLine("Enter id to delete one");
-          id = Console.ReadLine();
-          if (id is not null)
+        case "7":
+          // Ask for the max distance and room type in Menu.cs
+          Console.WriteLine("Enter the maximum distance to the beach (in meters): ");
+          if (int.TryParse(Console.ReadLine(), out int maxDistanceBeach))
           {
-            _actions.DeleteOne(id);
+            Console.WriteLine("Enter the room type (e.g., Single, Double, Suite): ");
+            string typeOfRoom = Console.ReadLine();
+
+            // Call the method in Actions.cs with the parameters
+            _actions.DistanceToBeach(maxDistanceBeach, typeOfRoom);
+          }
+          else
+          {
+            Console.WriteLine("Invalid input for max distance.");
           }
           break;
 
 
 
-        case ("8"): // 8. Search accommodations based on distance to center (hur långt borta får boendet max ligga ifrån ett centrum) GÖR EN QUERIE FÖR DETTA. Dynamisk sökning? )
-          Console.WriteLine("Enter id to delete one");
-          id = Console.ReadLine();
-          if (id is not null)
+   
+        case "8":
+          // Ask for the max distance and room type in Menu.cs
+          Console.WriteLine("Enter the maximum distance to the center (in meters): ");
+          if (int.TryParse(Console.ReadLine(), out int maxDistanceCenter))
           {
-            _actions.DeleteOne(id);
+            Console.WriteLine("Enter the room type (e.g., Single, Double, Suite): ");
+            string typeOfRoom = Console.ReadLine();
+
+            // Call the method in Actions.cs with the parameters
+            _actions.DistanceToCenter(maxDistanceCenter, typeOfRoom);
+          }
+          else
+          {
+            Console.WriteLine("Invalid input for max distance.");
           }
           break;
 
 
 
         case ("9"): // 9. Rooms sorted by price (low to high)
-          Console.WriteLine("Enter id to delete one");
-          id = Console.ReadLine();
-          if (id is not null)
-          {
-            _actions.DeleteOne(id);
-          }
+          _actions.GetRoomsSortedByPrice();
+          break;
+
+          
+        case ("10"): // 10. Hotels sorted by rating (high to low)
+          _actions.GetHotelsSortedByRating();
           break;
 
 
 
-        case ("10"): // 10. Rooms sorted by rating (high to low)
-          Console.WriteLine("Enter id to delete one");
-          id = Console.ReadLine();
-          if (id is not null)
-          {
-            _actions.DeleteOne(id);
-          }
-          break;
-
+       
 
 
         case ("11"): // 11. Search for available rooms between specified dates
@@ -187,14 +196,34 @@ public class Menu
 
 
 
-        case ("12"): // 12. Search for all rooms in one city sorted by specific criteria
-          Console.WriteLine("Enter id to delete one");
-          id = Console.ReadLine();
-          if (id is not null)
+        case "12":
+          // Ask for the city name, price range, and room type
+          Console.WriteLine("Enter the city name: ");
+          string cityName = Console.ReadLine();
+
+          Console.WriteLine("Enter the minimum price you can pay: ");
+          if (decimal.TryParse(Console.ReadLine(), out decimal minPrice))
           {
-            _actions.DeleteOne(id);
+             Console.WriteLine("Enter the maximum price you can pay: ");
+            if (decimal.TryParse(Console.ReadLine(), out decimal maxPrice))
+            {
+              Console.WriteLine("Enter the type of room (Single, Double, Family, Suite): ");
+              string roomType = Console.ReadLine();
+
+              // Call the method in Actions.cs with the parameters
+              _actions.SearchRoomsByPriceAndCity(cityName, minPrice, maxPrice, roomType);
+            }
+          else
+            {
+              Console.WriteLine("Invalid input for maximum price.");
+            }
+          }
+          else
+          {
+            Console.WriteLine("Invalid input for minimum price.");
           }
           break;
+
 
 
 
