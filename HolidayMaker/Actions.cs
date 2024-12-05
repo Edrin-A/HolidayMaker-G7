@@ -39,7 +39,7 @@ public class Actions
 
   public async Task<bool> IsRoomAvailable(int roomId, DateOnly startDate, DateOnly endDate) // 3. Search for available rooms between specified dates
   {
-    // Check if the room is available for the requested dates
+    // kolla om rummet är tillgänglig på mellan ett viss datum
     await using (var cmd = _db.CreateCommand("SELECT COUNT(*) FROM booked_rooms WHERE room_id = @room_id AND (start_date <= @end_date AND end_date >= @start_date)"))
     {
       cmd.Parameters.AddWithValue("@room_id", roomId);
@@ -53,7 +53,6 @@ public class Actions
 
   public async void AddNewBooking(int user_Id, decimal total_price, int number_of_guests) //4. Register new booking
   {
-    // Modified query to let PostgreSQL handle the ID auto-increment
     await using (var cmd = _db.CreateCommand("INSERT INTO bookings (user_id, total_price, number_of_guests) VALUES ($1, $2, $3) RETURNING id"))
     {
       cmd.Parameters.AddWithValue(user_Id);
@@ -122,7 +121,6 @@ public class Actions
 
   public async void UpdateBookingDetails(string bookingId, string? priceInput, string? guestsInput) // 8. Change details in a booking
   {
-    // Skapa en SQL-fråga för att uppdatera bokningsdetaljer
     await using (var cmd = _db.CreateCommand("UPDATE bookings SET total_price = $1, number_of_guests = $2 WHERE id = $3"))
     {
       // Lägg till parametrar
