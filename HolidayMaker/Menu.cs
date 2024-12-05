@@ -409,7 +409,7 @@ public class Menu
 
 
 
-        case ("16"): // 12. quit
+        case ("16"): // 16. quit
           Console.WriteLine("Quitting");
           Environment.Exit(0);
           break;
