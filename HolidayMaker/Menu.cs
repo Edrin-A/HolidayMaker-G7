@@ -155,7 +155,7 @@ public class Menu
           {
             _actions.AddNewBooking(userId, price, guests);
             Console.WriteLine("\nBooking registered successfully!");
-            //Console.WriteLine($"Here is the booking id: {booking_id}"); //hämta booking id som skapas från databasen?
+            //Console.WriteLine($"Here is the booking id: {booking_id}");
           }
           else
           {
@@ -186,7 +186,7 @@ public class Menu
           {
             _actions.LinkBookingRoom(booking_id, room_Id, bookingStartDate, bookingEndDate);
             Console.WriteLine("\nBooking registered successfully!");
-            //Console.WriteLine($"Here is the booking id: {booking_id}"); //hämta booking id som skapas från databasen?
+            //Console.WriteLine($"Here is the booking id: {booking_id}"); 
           }
           else
           {
