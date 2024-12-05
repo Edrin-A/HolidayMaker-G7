@@ -59,7 +59,7 @@ public class Actions
       cmd.Parameters.AddWithValue(total_price);
       cmd.Parameters.AddWithValue(number_of_guests);
 
-      // Get the newly created booking ID
+      // få det nya boknings id utskrivet
       var newBookingId = await cmd.ExecuteScalarAsync();
       Console.WriteLine($"New booking created with ID: {newBookingId}");
     }
