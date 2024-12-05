@@ -53,13 +53,16 @@ public class Actions
 
   public async void AddNewBooking(int user_Id, decimal total_price, int number_of_guests) //4. Register new booking
   {
-    // Insert data
-    await using (var cmd = _db.CreateCommand("INSERT INTO bookings (user_id, total_price, number_of_guests) VALUES ($1, $2, $3)"))
+    // Modified query to let PostgreSQL handle the ID auto-increment
+    await using (var cmd = _db.CreateCommand("INSERT INTO bookings (user_id, total_price, number_of_guests) VALUES ($1, $2, $3) RETURNING id"))
     {
       cmd.Parameters.AddWithValue(user_Id);
       cmd.Parameters.AddWithValue(total_price);
       cmd.Parameters.AddWithValue(number_of_guests);
-      await cmd.ExecuteNonQueryAsync();
+
+      // Get the newly created booking ID
+      var newBookingId = await cmd.ExecuteScalarAsync();
+      Console.WriteLine($"New booking created with ID: {newBookingId}");
     }
   }
 
@@ -98,7 +101,7 @@ public class Actions
   public async void addFeatureToBooking(int booking_id, int features_id) //6. Add features to booking
   {
     // Insert data
-    await using (var cmd = _db.CreateCommand("INSERT INTO booking_features (booking_id, features_id VALUES ($1, $2)"))
+    await using (var cmd = _db.CreateCommand("INSERT INTO booking_features (booking_id, features_id) VALUES ($1, $2)"))
     {
       cmd.Parameters.AddWithValue(booking_id);
       cmd.Parameters.AddWithValue(features_id);
@@ -109,7 +112,7 @@ public class Actions
   public async void addServiceToBooking(int booking_id, int additional_services_id) //7. Add services to booking
   {
     // Insert data
-    await using (var cmd = _db.CreateCommand("INSERT INTO booked_services (booking_id, additional_services_id VALUES ($1, $2)"))
+    await using (var cmd = _db.CreateCommand("INSERT INTO booked_services (booking_id, additional_services_id) VALUES ($1, $2)"))
     {
       cmd.Parameters.AddWithValue(booking_id);
       cmd.Parameters.AddWithValue(additional_services_id);

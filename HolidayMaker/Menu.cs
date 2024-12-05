@@ -165,6 +165,7 @@ public class Menu
 
 
           // länka bookningen till rummet
+          Console.WriteLine("\nYou are now going to link the booking to the room:");
           Console.WriteLine("\nEnter booking id:");
           var booking_Id = Console.ReadLine();
 
