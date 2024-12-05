@@ -1,3 +1,5 @@
+using System.Reflection.Metadata;
+using Microsoft.VisualBasic;
 using Npgsql;
 namespace HolidayMaker;
 
@@ -35,8 +37,8 @@ public class Actions
       await cmd.ExecuteNonQueryAsync();
     }
   }
- 
-  
+
+
   public async void ShowOne(string id) //ignorera denna
   {
     await using (var cmd = _db.CreateCommand("SELECT * FROM items WHERE id = $1")) //where distance is <= dollarsign (skicka in distance som en inparameter)
@@ -75,13 +77,55 @@ public class Actions
     }
   }
 
-  public async void DeleteOne(string id)  // 6. Cancel a booking
+  public async void GetAllPersonsInBooking(int booking_id) // 5. SHow all persons in a booking "klar"
+  {
+    // Prepare and execute the query from the view with parameters
+    await using (var cmd = _db.CreateCommand("SELECT * FROM view_persons_booking WHERE booking_id = @booking_id"))
+    {
+      // Add the parameters (max distance and room type)
+      cmd.Parameters.AddWithValue("@booking_id", booking_id);
+
+
+      // Execute the query and process the results
+      await using (var reader = await cmd.ExecuteReaderAsync())
+      {
+        bool found = false;
+        while (await reader.ReadAsync())
+        {
+          found = true;
+          // Print results
+          Console.WriteLine($"Booking ID: {reader.GetInt32(2)} \t Booker: {reader.GetString(0)} \t Guests: {reader.GetString(1)}");
+
+        }
+        if (!found)
+        {
+          Console.WriteLine("No persons matching this booking ID.");
+        }
+      }
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  public async void DeleteOne(string id)  // 6. Cancel a booking "klar"
+
   {
     // Delete data
-    await using (var cmd = _db.CreateCommand("DELETE FROM items WHERE id = $1"))
+    await using (var cmd = _db.CreateCommand("DELETE FROM bookings WHERE id = @id"))
     {
-      cmd.Parameters.AddWithValue(int.Parse(id));
+      cmd.Parameters.AddWithValue("@id", int.Parse(id));
       await cmd.ExecuteNonQueryAsync();
+      await using (var reader = await cmd.ExecuteReaderAsync()) ; 
     }
   }
 
@@ -114,7 +158,7 @@ public class Actions
     }
   }
 
-  
+
   public async void DistanceToCenter(int maxDistanceCenter, string typeOfRoom) // 8. Search accommodations based on distance to center
   {
     // Prepare and execute the query from the view with parameters
@@ -133,7 +177,7 @@ public class Actions
           found = true;
           // Print results
           Console.WriteLine($"Room ID: {reader.GetInt32(0)} \t Hotel: {reader.GetString(1)} \t Room Type: {reader.GetString(2)} \t Distance to Center: {reader.GetInt32(3)} meters \t Price per Night: {reader.GetDecimal(4)}");
-          
+
         }
         if (!found)
         {
@@ -171,8 +215,8 @@ public class Actions
 
 
   public async void SearchRoomsByPriceAndCity(string cityName, decimal minPrice, decimal maxPrice, string roomType) // 12. Search for all rooms in one city sorted by specific criteria
-{
-  // Sanitize inputs to prevent invalid encoding issues
+  {
+    // Sanitize inputs to prevent invalid encoding issues
     // cityName = cityName?.Replace("\0", "").Trim();  // Remove null bytes and trim extra spaces
     // roomType = roomType?.Replace("\0", "").Trim(); // Remove null bytes and trim extra spaces
 
@@ -186,7 +230,7 @@ public class Actions
       await using (var reader = await cmd.ExecuteReaderAsync())
       {
         bool found = false;
-        while (await reader.ReadAsync()) 
+        while (await reader.ReadAsync())
         {
           found = true;
           Console.WriteLine($"Hotel: {reader.GetString(1)} \t Address: {reader.GetString(2)} \t City: {reader.GetString(3)} \t Rating: {reader.GetDecimal(4)} \t Room Type: {reader.GetString(5)} \t Price per Night: {reader.GetDecimal(6)}");
@@ -197,11 +241,11 @@ public class Actions
         }
       }
     }
+  }
 }
-}
 
 
 
-  
 
-  
+
+

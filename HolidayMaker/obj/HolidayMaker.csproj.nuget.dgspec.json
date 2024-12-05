@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\HolidayMaker-G7\\HolidayMaker-G7\\HolidayMaker\\HolidayMaker.csproj": {}
+    "/Users/farzaddehzad/HolidayMaker/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\HolidayMaker-G7\\HolidayMaker-G7\\HolidayMaker\\HolidayMaker.csproj": {
+    "/Users/farzaddehzad/HolidayMaker/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\HolidayMaker-G7\\HolidayMaker-G7\\HolidayMaker\\HolidayMaker.csproj",
+        "projectUniqueName": "/Users/farzaddehzad/HolidayMaker/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj",
         "projectName": "HolidayMaker",
-        "projectPath": "C:\\Users\\Admin\\HolidayMaker-G7\\HolidayMaker-G7\\HolidayMaker\\HolidayMaker.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\HolidayMaker-G7\\HolidayMaker-G7\\HolidayMaker\\obj\\",
+        "projectPath": "/Users/farzaddehzad/HolidayMaker/HolidayMaker-G7/HolidayMaker/HolidayMaker.csproj",
+        "packagesPath": "/Users/farzaddehzad/.nuget/packages/",
+        "outputPath": "/Users/farzaddehzad/HolidayMaker/HolidayMaker-G7/HolidayMaker/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/farzaddehzad/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -64,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

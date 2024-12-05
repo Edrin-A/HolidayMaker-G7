@@ -110,16 +110,17 @@ public class Menu
 
 
 
-        case ("5"): // 5. Show every person in a booking
-          Console.WriteLine("Enter id to delete one");
-          id = Console.ReadLine();
-          if (id is not null)
+        case "5": // Show every person in a booking
+          Console.WriteLine("Enter booking ID to show details:");
+          if (int.TryParse(Console.ReadLine(), out int booking_id))
           {
-            _actions.DeleteOne(id);
+            _actions.GetAllPersonsInBooking(booking_id); // Kör metoden i Actions
+          }
+          else
+          {
+            Console.WriteLine("Invalid booking ID. Please enter a valid number.");
           }
           break;
-
-
 
         case ("6"): // 6. Cancel a booking
           Console.WriteLine("Enter id to delete one");
@@ -151,7 +152,7 @@ public class Menu
 
 
 
-   
+
         case "8":
           // Ask for the max distance and room type in Menu.cs
           Console.WriteLine("Enter the maximum distance to the center (in meters): ");
@@ -175,14 +176,14 @@ public class Menu
           _actions.GetRoomsSortedByPrice();
           break;
 
-          
+
         case ("10"): // 10. Hotels sorted by rating (high to low)
           _actions.GetHotelsSortedByRating();
           break;
 
 
 
-       
+
 
 
         case ("11"): // 11. Search for available rooms between specified dates
@@ -204,7 +205,7 @@ public class Menu
           Console.WriteLine("Enter the minimum price you can pay: ");
           if (decimal.TryParse(Console.ReadLine(), out decimal minPrice))
           {
-             Console.WriteLine("Enter the maximum price you can pay: ");
+            Console.WriteLine("Enter the maximum price you can pay: ");
             if (decimal.TryParse(Console.ReadLine(), out decimal maxPrice))
             {
               Console.WriteLine("Enter the type of room (Single, Double, Family, Suite): ");
@@ -213,7 +214,7 @@ public class Menu
               // Call the method in Actions.cs with the parameters
               _actions.SearchRoomsByPriceAndCity(cityName, minPrice, maxPrice, roomType);
             }
-          else
+            else
             {
               Console.WriteLine("Invalid input for maximum price.");
             }
