@@ -1,5 +1,3 @@
-using System.Reflection.Metadata;
-using Microsoft.VisualBasic;
 using Npgsql;
 namespace HolidayMaker;
 
@@ -125,7 +123,7 @@ public class Actions
     {
       cmd.Parameters.AddWithValue("@id", int.Parse(id));
       await cmd.ExecuteNonQueryAsync();
-      await using (var reader = await cmd.ExecuteReaderAsync()) ; 
+      await using (var reader = await cmd.ExecuteReaderAsync()) ;
     }
   }
 
