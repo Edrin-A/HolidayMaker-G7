@@ -51,7 +51,7 @@ public class Actions
   }
 
 
-  public async void AddNewBooking(int user_Id, decimal total_price, int number_of_guests) //4. Register new booking
+  public async void AddNewBooking(int user_Id, decimal total_price, int number_of_guests) //4. Create new booking
   {
     await using (var cmd = _db.CreateCommand("INSERT INTO bookings (user_id, total_price, number_of_guests) VALUES ($1, $2, $3) RETURNING id"))
     {
@@ -59,7 +59,7 @@ public class Actions
       cmd.Parameters.AddWithValue(total_price);
       cmd.Parameters.AddWithValue(number_of_guests);
 
-      // få det nya boknings id utskrivet
+      // Get the newly created booking ID
       var newBookingId = await cmd.ExecuteScalarAsync();
       Console.WriteLine($"New booking created with ID: {newBookingId}");
     }
@@ -135,7 +135,7 @@ public class Actions
 
 
 
-  public async void GetAllPersonsInBooking(int booking_id) // 9. SHow all persons in a booking "klar"
+  public async void GetAllPersonsInBooking(int booking_id) // 9. Show every person in a booking
   {
     // Prepare and execute the query from the view with parameters
     await using (var cmd = _db.CreateCommand("SELECT * FROM view_persons_booking WHERE booking_id = @booking_id"))
@@ -167,7 +167,7 @@ public class Actions
 
 
 
-  public async void DeleteOne(string id)  // 6. Cancel a booking
+  public async void DeleteOne(string id)  // 10. Cancel a booking
   {
     // Delete data
     await using (var cmd = _db.CreateCommand("DELETE FROM bookings WHERE id = @id"))
@@ -180,7 +180,7 @@ public class Actions
 
 
 
-  public async void DistanceToBeach(int maxDistanceBeach, string typeOfRoom) // 7. Search accommodations based on distance to beach
+  public async void DistanceToBeach(int maxDistanceBeach, string typeOfRoom) // 11. Search accommodations based on distance to beach
   {
     // Prepare and execute the query from the view with parameters
     await using (var cmd = _db.CreateCommand("SELECT * FROM DistanceToBeach WHERE distance_to_beach <= @maxDistanceBeach AND room_type = @typeOfRoom"))
@@ -209,7 +209,7 @@ public class Actions
   }
 
 
-  public async void DistanceToCenter(int maxDistanceCenter, string typeOfRoom) // 8. Search accommodations based on distance to center
+  public async void DistanceToCenter(int maxDistanceCenter, string typeOfRoom) // 12. Search accommodations based on distance to center
   {
     // Prepare and execute the query from the view with parameters
     await using (var cmd = _db.CreateCommand("SELECT * FROM DistanceToCenter WHERE distance_to_center <= @maxDistanceCenter AND room_type = @typeOfRoom"))
@@ -238,7 +238,7 @@ public class Actions
   }
 
 
-  public async void GetRoomsSortedByPrice() // "9. Rooms sorted by price (low to high)"); // nami
+  public async void GetRoomsSortedByPrice() // "13 Rooms sorted by price (low to high)"); // nami
   {
     await using (var cmd = _db.CreateCommand("SELECT h.hotel_name, rt.type, r.price_per_night FROM rooms AS r LEFT JOIN hotels h ON r.hotel_id = h.id LEFT JOIN room_types rt ON r.room_type = rt.id ORDER BY r.price_per_night"))
     await using (var reader = await cmd.ExecuteReaderAsync())
@@ -249,7 +249,7 @@ public class Actions
       }
     }
   }
-  public async void GetHotelsSortedByRating() // "10. Rooms sorted by rating (high to low)"); // nami
+  public async void GetHotelsSortedByRating() // "14. Rooms sorted by rating (high to low)"); // nami
   {
     await using (var cmd = _db.CreateCommand("SELECT h.hotel_name, h.rating FROM hotels h ORDER BY h.rating DESC"))
     await using (var reader = await cmd.ExecuteReaderAsync())
@@ -264,12 +264,8 @@ public class Actions
 
 
 
-  public async void SearchRoomsByPriceAndCity(string cityName, decimal minPrice, decimal maxPrice, string roomType) // 12. Search for all rooms in one city sorted by specific criteria
+  public async void SearchRoomsByPriceAndCity(string cityName, decimal minPrice, decimal maxPrice, string roomType) // 15. Search for all rooms in one city sorted by specific criteria
   {
-    // Sanitize inputs to prevent invalid encoding issues
-    // cityName = cityName?.Replace("\0", "").Trim();  // Remove null bytes and trim extra spaces
-    // roomType = roomType?.Replace("\0", "").Trim(); // Remove null bytes and trim extra spaces
-
     await using (var cmd = _db.CreateCommand("SELECT * FROM PriceByCityAndPrice WHERE city_name = @city AND price_per_night >= @minPrice AND price_per_night <= @maxPrice AND room_type = @roomType"))
     {
       cmd.Parameters.AddWithValue("@city", cityName);
@@ -293,9 +289,3 @@ public class Actions
     }
   }
 }
-
-
-
-
-
-

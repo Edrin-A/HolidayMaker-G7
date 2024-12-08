@@ -14,7 +14,7 @@ public class Menu
   private void PrintMenu()
   {
     // skriver ut menyn i konsolen
-    Console.WriteLine("===================");
+    Console.WriteLine("\n===================");
     Console.WriteLine("User related options:");
     Console.WriteLine("1. List all users");
     Console.WriteLine("2. Register new user");
@@ -38,7 +38,7 @@ public class Menu
     Console.WriteLine("12. Search accommodations based on distance to center");
     Console.WriteLine("13. Rooms sorted by price (low to high)");
     Console.WriteLine("14. Hotels sorted by rating (high to low)");
-    Console.WriteLine("15. Search for all rooms in one city sorted by specific criteria");
+    Console.WriteLine("15. Search for all hotels in one city sorted by specific criteria");
     Console.WriteLine("===================");
 
     Console.WriteLine("\n===================");
@@ -142,7 +142,7 @@ public class Menu
           var user_Id = Console.ReadLine();
 
 
-          Console.WriteLine("total price:"); //???
+          Console.WriteLine("total price:");
           var total_price = Console.ReadLine();
 
 
@@ -155,7 +155,6 @@ public class Menu
           {
             _actions.AddNewBooking(userId, price, guests);
             Console.WriteLine("\nBooking registered successfully!");
-            //Console.WriteLine($"Here is the booking id: {booking_id}");
           }
           else
           {
@@ -186,7 +185,6 @@ public class Menu
           {
             _actions.LinkBookingRoom(booking_id, room_Id, bookingStartDate, bookingEndDate);
             Console.WriteLine("\nBooking registered successfully!");
-            //Console.WriteLine($"Here is the booking id: {booking_id}"); 
           }
           else
           {
@@ -262,7 +260,7 @@ public class Menu
           break;
 
 
-        case ("7"): //6. Add services to booking
+        case ("7"): //7. Add services to booking
           Console.WriteLine("\nEnter booking id:");
           booking_Id = Console.ReadLine();
 
@@ -288,9 +286,9 @@ public class Menu
           var bookingId = Console.ReadLine();
           if (bookingId is null) break;
 
-          Console.WriteLine("Enter new total price (or press enter to skip):");
+          Console.WriteLine("Enter new total price (or type the same as before):");
           var priceInput = Console.ReadLine();
-          Console.WriteLine("Enter new number of guests (or press enter to skip):");
+          Console.WriteLine("Enter new number of guests (or type the same as before):");
           var guestsInput = Console.ReadLine();
 
           if (!string.IsNullOrWhiteSpace(priceInput) || !string.IsNullOrWhiteSpace(guestsInput))
@@ -316,7 +314,7 @@ public class Menu
 
 
         case ("10"): // 10. Cancel a booking
-          Console.WriteLine("Enter id to delete one");
+          Console.WriteLine("Enter the booking id you want to cancel");
           id = Console.ReadLine();
           if (id is not null)
           {
@@ -329,12 +327,12 @@ public class Menu
 
 
 
-        case "11":
+        case "11": // 11. Search accommodations based on distance to beach
           // Ask for the max distance and room type in Menu.cs
           Console.WriteLine("Enter the maximum distance to the beach (in meters): ");
           if (int.TryParse(Console.ReadLine(), out int maxDistanceBeach))
           {
-            Console.WriteLine("Enter the room type (e.g., Single, Double, Suite): ");
+            Console.WriteLine("Enter the room type (Single, Double, Family, Suite): ");
             string typeOfRoom = Console.ReadLine();
 
             // Call the method in Actions.cs with the parameters
@@ -349,12 +347,12 @@ public class Menu
 
 
 
-        case "12":
+        case "12": // 12. Search accommodations based on distance to center
           // Ask for the max distance and room type in Menu.cs
           Console.WriteLine("Enter the maximum distance to the center (in meters): ");
           if (int.TryParse(Console.ReadLine(), out int maxDistanceCenter))
           {
-            Console.WriteLine("Enter the room type (e.g., Single, Double, Suite): ");
+            Console.WriteLine("Enter the room type (Single, Double, Family, Suite): ");
             string typeOfRoom = Console.ReadLine();
 
             // Call the method in Actions.cs with the parameters
@@ -368,17 +366,17 @@ public class Menu
 
 
 
-        case ("13"): // 9. Rooms sorted by price (low to high)
+        case ("13"): // 13. Rooms sorted by price (low to high)
           _actions.GetRoomsSortedByPrice();
           break;
 
 
-        case ("14"): // 10. Hotels sorted by rating (high to low)
+        case ("14"): // 14. Hotels sorted by rating (high to low)
           _actions.GetHotelsSortedByRating();
           break;
 
 
-        case "15":
+        case "15": // 15. Search for all rooms in one city sorted by specific criteria
           // Ask for the city name, price range, and room type
           Console.WriteLine("Enter the city name: ");
           string cityName = Console.ReadLine();
