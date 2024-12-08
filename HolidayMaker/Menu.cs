@@ -14,29 +14,35 @@ public class Menu
   private void PrintMenu()
   {
     // skriver ut menyn i konsolen
-    Console.WriteLine("===================");
+    Console.WriteLine("\n===================");
     Console.WriteLine("User related options:");
-    Console.WriteLine("1. List all users"); // klar (lägg till mer info)
-    Console.WriteLine("2. Register new user"); // klar (edrin - try catch error för att ha varje parameter med?)
+    Console.WriteLine("1. List all users");
+    Console.WriteLine("2. Register new user");
+    Console.WriteLine("===================");
 
     Console.WriteLine("\n===================");
     Console.WriteLine("Bookings:");
-    Console.WriteLine("3. Create new booking"); // edrin
-    Console.WriteLine("4. Change details in a booking"); //  edrin kolla om man bara vill ändra 1 tex?
-    Console.WriteLine("5. Show every person in a booking"); // farzad
-    Console.WriteLine("6. Cancel a booking"); // klar
+    Console.WriteLine("3. Search for available rooms between specified dates");
+    Console.WriteLine("4. Create new booking");
+    Console.WriteLine("5. Add guests to a booking");
+    Console.WriteLine("6. Add features to booking");
+    Console.WriteLine("7. Add services to booking");
+    Console.WriteLine("8. Change details in a booking");
+    Console.WriteLine("9. Show every person in a booking");
+    Console.WriteLine("10. Cancel a booking");
+    Console.WriteLine("===================");
 
     Console.WriteLine("\n===================");
     Console.WriteLine("Specified searches:");
-    Console.WriteLine("7. Search accommodations based on distance to beach"); // edrin (dynamisk sökning)
-    Console.WriteLine("8. Search accommodations based on distance to center"); // abdel (dynamisk sökning 
-    Console.WriteLine("9. Rooms sorted by price (low to high)"); // nami
-    Console.WriteLine("10. Rooms sorted by rating (high to low)"); // nami
-    Console.WriteLine("11. Search for available rooms between specified dates"); // edrin (dynamisk sökning) (lägg till startdate-enddate i booked_rooms)
-    Console.WriteLine("12. Search for all rooms in one city sorted by specific criteria"); // abdel
+    Console.WriteLine("11. Search accommodations based on distance to beach");
+    Console.WriteLine("12. Search accommodations based on distance to center");
+    Console.WriteLine("13. Rooms sorted by price (low to high)");
+    Console.WriteLine("14. Hotels sorted by rating (high to low)");
+    Console.WriteLine("15. Search for all hotels in one city sorted by specific criteria");
+    Console.WriteLine("===================");
 
     Console.WriteLine("\n===================");
-    Console.WriteLine("13. Quit");
+    Console.WriteLine("16. Quit");
     Console.WriteLine("===================");
     // lyssnar på användaren
     AskUser();
@@ -54,65 +60,248 @@ public class Menu
       switch (response)
       {
         case ("1"): // 1. List all users
-          Console.WriteLine("Listing all");
+          Console.WriteLine("Listing all users");
           _actions.ListAll();
           break;
 
 
 
         case ("2"): // 2. Register new user
-          Console.WriteLine("Enter firstname");
-          var firstname = Console.ReadLine(); // required
+          Console.WriteLine("Enter firstname:");
+          var firstname = Console.ReadLine();
 
-          Console.WriteLine("Enter lastname");
-          var lastname = Console.ReadLine(); // required
+          Console.WriteLine("Enter lastname:");
+          var lastname = Console.ReadLine();
 
-          Console.WriteLine("Enter email");
-          var email = Console.ReadLine(); // required
+          Console.WriteLine("Enter email:");
+          var email = Console.ReadLine();
 
-          Console.WriteLine("Enter phone number");
-          var phone_number = Console.ReadLine(); // required
+          Console.WriteLine("Enter phone number:");
+          var phone_number = Console.ReadLine();
 
-          Console.WriteLine("Enter birthday (YYYY-MM-DD)");
-          var birthdayInput = Console.ReadLine(); // required
+          Console.WriteLine("Enter birthday (YYYY-MM-DD):");
+          var birthdayInput = Console.ReadLine();
 
-          if (firstname is not null && DateOnly.TryParse(birthdayInput, out var birthday)) // konvertera och validera
+          if (!string.IsNullOrWhiteSpace(firstname) &&
+              !string.IsNullOrWhiteSpace(lastname) &&
+              !string.IsNullOrWhiteSpace(email) &&
+              !string.IsNullOrWhiteSpace(phone_number) &&
+              DateOnly.TryParse(birthdayInput, out var birthday))
           {
-            _actions.AddOne(firstname, lastname, email, phone_number, birthday);
+            // lägg till new user
+            _actions.AddNewUser(firstname, lastname, email, phone_number, birthday);
+
+            // säg att det gick och visa vad man har skrivit in
+            Console.WriteLine("\nUser registered successfully!");
+            Console.WriteLine("Here are the details you entered:");
+            Console.WriteLine($"Firstname: {firstname}");
+            Console.WriteLine($"Lastname: {lastname}");
+            Console.WriteLine($"Email: {email}");
+            Console.WriteLine($"Phone Number: {phone_number}");
+            Console.WriteLine($"Birthday: {birthday:yyyy-MM-dd}\n");
           }
           else
           {
-            Console.WriteLine("Invalid date format. Please use YYYY-MM-DD.");
+            Console.WriteLine("\nAll fields must be filled in and date must be in YYYY-MM-DD format.");
           }
           break;
 
 
 
-        case ("3"): // "3. Create new booking"
-          Console.WriteLine("Enter id to show details about one");
-          id = Console.ReadLine();
-          if (id is not null)
+        case ("3"): // 3. Search for available rooms between specified dates
+          Console.WriteLine("Enter room id:");
+          var roomId = Console.ReadLine();
+          Console.WriteLine("Enter start date (YYYY-MM-DD):");
+          var startDateInput = Console.ReadLine();
+          Console.WriteLine("Enter end date (YYYY-MM-DD):");
+          var endDateInput = Console.ReadLine();
+
+          if (int.TryParse(roomId, out var roomIdParsed) &&
+              DateOnly.TryParse(startDateInput, out var startDate) &&
+              DateOnly.TryParse(endDateInput, out var endDate))
           {
-            _actions.ShowOne(id);
+            bool isAvailable = _actions.IsRoomAvailable(roomIdParsed, startDate, endDate).GetAwaiter().GetResult();
+
+            if (isAvailable)
+            {
+              Console.WriteLine("This room is available for your requested dates.");
+            }
+            else
+            {
+              Console.WriteLine("This room is not available for your requested dates.");
+            }
           }
-          break;
-
-
-
-        case ("4"): // 4. Change details in a booking
-          Console.WriteLine("Enter id to update one");
-          id = Console.ReadLine();
-          if (id is not null)
+          else
           {
-            _actions.UpdateOne(id);
+            Console.WriteLine("Invalid input. Please try again.");
+          }
+          break;
+
+        case ("4"): // 4. Create new booking
+          Console.WriteLine("Enter user id:");
+          var user_Id = Console.ReadLine();
+
+
+          Console.WriteLine("total price:");
+          var total_price = Console.ReadLine();
+
+
+          Console.WriteLine("Enter number of guests:");
+          var number_of_guests = Console.ReadLine();
+
+          if (int.TryParse(user_Id, out var userId) &&
+              decimal.TryParse(total_price, out var price) &&
+              int.TryParse(number_of_guests, out var guests))
+          {
+            _actions.AddNewBooking(userId, price, guests);
+            Console.WriteLine("\nBooking registered successfully!");
+          }
+          else
+          {
+            Console.WriteLine("\nAll fields must be filled in");
+          }
+
+
+
+          // länka bookningen till rummet
+          Console.WriteLine("\nYou are now going to link the booking to the room:");
+          Console.WriteLine("\nEnter booking id:");
+          var booking_Id = Console.ReadLine();
+
+          Console.WriteLine("Enter room id:");
+          roomId = Console.ReadLine();
+
+          Console.WriteLine("Enter start date (YYYY-MM-DD):");
+          var inputStartDate = Console.ReadLine();
+
+          Console.WriteLine("Enter end date (YYYY-MM-DD):");
+          var inputBookingendDate = Console.ReadLine();
+
+
+          if (int.TryParse(booking_Id, out var booking_id) &&
+                  int.TryParse(roomId, out var room_Id) &&
+                  DateOnly.TryParse(inputStartDate, out var bookingStartDate) &&
+                  DateOnly.TryParse(inputBookingendDate, out var bookingEndDate))
+          {
+            _actions.LinkBookingRoom(booking_id, room_Id, bookingStartDate, bookingEndDate);
+            Console.WriteLine("\nBooking registered successfully!");
+          }
+          else
+          {
+            Console.WriteLine("\nAll fields must be filled in");
           }
           break;
 
 
+        case ("5"): //5. Add guests to a booking
+          Console.WriteLine("Enter booking id:");
+          var guest_booking_id = Console.ReadLine();
 
-        case "5": // Show every person in a booking
+          Console.WriteLine("Enter guest firstname:");
+          var guest_firstname = Console.ReadLine();
+
+          Console.WriteLine("Enter guest lastname:");
+          var guest_lastname = Console.ReadLine();
+
+          Console.WriteLine("Enter guest email:");
+          var guest_email = Console.ReadLine();
+
+          Console.WriteLine("Enter guest phone number:");
+          var guest_phone_number = Console.ReadLine();
+
+          Console.WriteLine("Enter guest birthday (YYYY-MM-DD):");
+          var guest_birthdayInput = Console.ReadLine();
+
+          if (int.TryParse(guest_booking_id, out var booking_ID) &&
+              !string.IsNullOrWhiteSpace(guest_firstname) &&
+              !string.IsNullOrWhiteSpace(guest_lastname) &&
+              !string.IsNullOrWhiteSpace(guest_email) &&
+              !string.IsNullOrWhiteSpace(guest_phone_number) &&
+              DateOnly.TryParse(guest_birthdayInput, out var guest_birthday))
+          {
+            // lägg till new user
+            _actions.AddGuestToBooking(booking_ID, guest_firstname, guest_lastname, guest_email, guest_phone_number, guest_birthday);
+
+            // säg att det gick och visa vad man har skrivit in
+            Console.WriteLine("\nGuest registered successfully!");
+            Console.WriteLine("Here are the details you entered:");
+            Console.WriteLine($"booking id: {booking_ID}");
+            Console.WriteLine($"Firstname: {guest_firstname}");
+            Console.WriteLine($"Lastname: {guest_lastname}");
+            Console.WriteLine($"Email: {guest_email}");
+            Console.WriteLine($"Phone Number: {guest_phone_number}");
+            Console.WriteLine($"Birthday: {guest_birthday:yyyy-MM-dd}\n");
+          }
+          else
+          {
+            Console.WriteLine("\nAll fields must be filled in and date must be in YYYY-MM-DD format.");
+          }
+          break;
+
+        case ("6"): //6. Add features to booking
+          Console.WriteLine("\nEnter booking id:");
+          booking_Id = Console.ReadLine();
+
+          Console.WriteLine("\nEnter the id of the feature you want to have (1 - Pool, 2 - Evening Entertainment, 3 - Kids Club, 4 - Restaurant):");
+          var feature_Id = Console.ReadLine();
+
+
+          if (int.TryParse(booking_Id, out booking_id) &&
+                  int.TryParse(feature_Id, out var feature_id))
+
+          {
+            _actions.addFeatureToBooking(booking_id, feature_id);
+            Console.WriteLine("features registered successfully!");
+          }
+          else
+          {
+            Console.WriteLine("\nAll fields must be filled in");
+          }
+          break;
+
+
+        case ("7"): //7. Add services to booking
+          Console.WriteLine("\nEnter booking id:");
+          booking_Id = Console.ReadLine();
+
+          Console.WriteLine("\nEnter the id of the additional service you want to have (1 - Extra Bed, 2 - Half Board, 3 - Full Board, 4 - all-inclusive):");
+          var additional_services_id = Console.ReadLine();
+
+
+          if (int.TryParse(booking_Id, out booking_id) &&
+                  int.TryParse(additional_services_id, out var service_id))
+
+          {
+            _actions.addServiceToBooking(booking_id, service_id);
+            Console.WriteLine("Additional services registered successfully!");
+          }
+          else
+          {
+            Console.WriteLine("\nAll fields must be filled in");
+          }
+          break;
+
+        case ("8"): // 8. Change details in a booking
+          Console.WriteLine("Enter booking ID:");
+          var bookingId = Console.ReadLine();
+          if (bookingId is null) break;
+
+          Console.WriteLine("Enter new total price (or type the same as before):");
+          var priceInput = Console.ReadLine();
+          Console.WriteLine("Enter new number of guests (or type the same as before):");
+          var guestsInput = Console.ReadLine();
+
+          if (!string.IsNullOrWhiteSpace(priceInput) || !string.IsNullOrWhiteSpace(guestsInput))
+          {
+            _actions.UpdateBookingDetails(bookingId, priceInput, guestsInput);
+            Console.WriteLine("Update completed successfully!");
+          }
+          break;
+
+
+        case ("9"):// Show every person in a booking
           Console.WriteLine("Enter booking ID to show details:");
-          if (int.TryParse(Console.ReadLine(), out int booking_id))
+          if (int.TryParse(Console.ReadLine(), out booking_id))
           {
             _actions.GetAllPersonsInBooking(booking_id); // Kör metoden i Actions
           }
@@ -122,8 +311,10 @@ public class Menu
           }
           break;
 
-        case ("6"): // 6. Cancel a booking
-          Console.WriteLine("Enter id to delete one");
+
+
+        case ("10"): // 10. Cancel a booking
+          Console.WriteLine("Enter the booking id you want to cancel");
           id = Console.ReadLine();
           if (id is not null)
           {
@@ -133,12 +324,15 @@ public class Menu
 
 
 
-        case "7":
+
+
+
+        case "11": // 11. Search accommodations based on distance to beach
           // Ask for the max distance and room type in Menu.cs
           Console.WriteLine("Enter the maximum distance to the beach (in meters): ");
           if (int.TryParse(Console.ReadLine(), out int maxDistanceBeach))
           {
-            Console.WriteLine("Enter the room type (e.g., Single, Double, Suite): ");
+            Console.WriteLine("Enter the room type (Single, Double, Family, Suite): ");
             string typeOfRoom = Console.ReadLine();
 
             // Call the method in Actions.cs with the parameters
@@ -153,12 +347,12 @@ public class Menu
 
 
 
-        case "8":
+        case "12": // 12. Search accommodations based on distance to center
           // Ask for the max distance and room type in Menu.cs
           Console.WriteLine("Enter the maximum distance to the center (in meters): ");
           if (int.TryParse(Console.ReadLine(), out int maxDistanceCenter))
           {
-            Console.WriteLine("Enter the room type (e.g., Single, Double, Suite): ");
+            Console.WriteLine("Enter the room type (Single, Double, Family, Suite): ");
             string typeOfRoom = Console.ReadLine();
 
             // Call the method in Actions.cs with the parameters
@@ -172,32 +366,17 @@ public class Menu
 
 
 
-        case ("9"): // 9. Rooms sorted by price (low to high)
+        case ("13"): // 13. Rooms sorted by price (low to high)
           _actions.GetRoomsSortedByPrice();
           break;
 
 
-        case ("10"): // 10. Hotels sorted by rating (high to low)
+        case ("14"): // 14. Hotels sorted by rating (high to low)
           _actions.GetHotelsSortedByRating();
           break;
 
 
-
-
-
-
-        case ("11"): // 11. Search for available rooms between specified dates
-          Console.WriteLine("Enter id to delete one");
-          id = Console.ReadLine();
-          if (id is not null)
-          {
-            _actions.DeleteOne(id);
-          }
-          break;
-
-
-
-        case "12":
+        case "15": // 15. Search for all rooms in one city sorted by specific criteria
           // Ask for the city name, price range, and room type
           Console.WriteLine("Enter the city name: ");
           string cityName = Console.ReadLine();
@@ -228,7 +407,7 @@ public class Menu
 
 
 
-        case ("13"): // 12. quit
+        case ("16"): // 16. quit
           Console.WriteLine("Quitting");
           Environment.Exit(0);
           break;
